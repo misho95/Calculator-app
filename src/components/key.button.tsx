@@ -1,18 +1,37 @@
+import { useContext } from "react";
 import { useTheme } from "../utils/global.store";
+import { GlobalContext } from "./calculator";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 type PropsType = {
   variant?: "primary" | "secondary" | "warning";
-  width?: number;
+  width?: {
+    small: number;
+    big: number;
+  };
   value: number | string;
 };
 
 const KeyButton = ({ variant = "primary", value, width }: PropsType) => {
+  const size = useWindowSize();
+
   const { theme } = useTheme();
+
+  const globalContext = useContext(GlobalContext);
+
+  if (!globalContext) {
+    return;
+  }
+
+  if (!size.width) {
+    return;
+  }
 
   return (
     <button
-      style={{ width }}
-      className={`flex justify-center items-center w-[107px] h-[60px] rounded-[10px] shadow-lift text-[40px] font-bold ${
+      onClick={() => globalContext.handleKeyPress(value)}
+      style={{ width: size.width <= 639 ? width?.small : width?.big }}
+      className={`flex justify-center items-center w-[60px] h-[64px] sm:w-[107px] sm:h-[60px] rounded-[10px] shadow-lift text-[32px] sm:text-[40px] font-bold ${
         variant === "primary"
           ? theme === 1
             ? "bg-[#EAE3DC] active:bg-[#FFFFFE] text-[#434A59] shadow-[#B3A497]"
