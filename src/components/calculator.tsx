@@ -7,7 +7,7 @@ type PropsType = {
 type GlobalContextType = {
   handleKeyPress: (key: string | number) => void;
   screen: string;
-  equal: string;
+  equal: string | null;
 };
 
 export const GlobalContext = createContext<null | GlobalContextType>(null);
