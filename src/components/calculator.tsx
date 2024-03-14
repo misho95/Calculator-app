@@ -39,6 +39,10 @@ const Calculator = ({ children }: PropsType) => {
       setSymbol(key);
       setScreen("");
     }
+    if (number) {
+      handleSymbol("=");
+      setSymbol(key);
+    }
   };
 
   const handleSymbol = (key: string) => {
